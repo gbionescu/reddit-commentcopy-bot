@@ -27,7 +27,11 @@ destination = praw.models.Submission(reddit, url=sys.argv[2])
 source.comment_sort = "new"
 src_comments = reversed(source.comments.list())
 
+
 for comm in src_comments:
+    if isinstance(comm, praw.models.MoreComments):
+        continue
+
     # For each parent comment, post in the destination thread
     if comm.is_root and comm.author:
         reply_body = "Intrebare de la /u/%s:\n***\n%s" \
